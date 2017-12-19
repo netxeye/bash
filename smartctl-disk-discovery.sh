@@ -62,6 +62,10 @@ IFS=${IFS_bk}
 }
 function Check_disks {
   smartctl -H $1 -d $2 |egrep -i '(SMART Health Status|SMART overall-health)' | awk -F: '{print $2}'
+  smartctl -H $1 -d $2 &> /dev/null
+  if [ ${?} -ne 0 ]; then
+    echo 'ERROR'
+  fi
 }
 umask 022
 [[ ${UID} == 0 ]] ||  exit 1
@@ -80,3 +84,4 @@ done
 if [ ! -z ${DISKS} ] && [ ! -z ${DIRVERS} ] ; then
   Check_disks ${DISKS} ${DIRVERS}
 fi
+
