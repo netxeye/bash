@@ -21,52 +21,57 @@ function Parser {
     fi
 }
 function JSON {
-    echo '{'
-    echo '"text": "This is Zabbix alarm from ZABBIX3",'
-    echo '"attachments": ['
-    echo "  { \"title\": \"Problem ${TRIGGER_NAME}\","
-    echo "    \"title_link\": \"${TRIGGER_URL}\","
-    echo '     "color": "danger",'
-    echo '     "fields": ['
-    echo '         { "title": "Severity",'
-    echo "           \"value\": \"${TRIGGER_SEVERITY}\","
-    echo '            "short": true},'
-    echo '         { "title": "Problem ID",'
-    echo "           \"value\": \"${EVENT_ID}\","
-    echo '            "short": true},'
-    echo '         { "title": "Host Name",'
-    echo "           \"value\": \"${HOST_NAME}\","
-    echo '            "short": true}'
-    echo '       ]'
-    echo '  },'
-    echo '  { "title": "Would you like to ACK this alarm ?",'
-    echo '    "fallback": "Action for ACK alarm",'
-    echo "    \"callback_id\": \"zabbix ${EVENT_ID}\","
-    echo '    "color": "#3AA3E3",'
-    echo '    "actions": [ '
-    echo '    { '
-    echo '       "name": "action", '
-    echo '       "text": "ACK without Closing", '
-    echo '       "type": "button", '
-    echo '       "value": "ACK_zabbix" '
-    echo '     }, '
-    echo '    { '
-    echo '       "name": "action", '
-    echo '       "text": "ACK with Closing", '
-    echo '       "type": "button", '
-    echo '       "style": "danger", '
-    echo '       "value": "ACK_CLOSE_zabbix", '
-    echo '       "confirm": { '
-    echo '          "title": "Are you sure?", '
-    echo '          "text": "Would you like to ACK and CLOSE this problem?", '
-    echo '          "ok_text": "Yes", '
-    echo '          "dismiss_text": "No" '
-    echo '       } '
-    echo '     } '
-    echo '    ] '
-    echo '  } '
-    echo '] '
-    echo '} '
+    JSON_V=$(cat <<-JSONS
+    {
+    "text": "This is Zabbix alarm from ZABBIX3",
+    "channel": "#zabbix-discussion",
+    "as_user": "true",
+    "token": "${TOKEN}",
+    "attachments": [
+      { "title": "Problem ${TRIGGER_NAME}",
+        "title_link": "${TRIGGER_URL}",
+         "color": "danger",
+         "fields": [
+             { "title": "Severity",
+               "value": "${TRIGGER_SEVERITY}",
+                "short": true},
+             { "title": "Problem ID",
+               "value": "${EVENT_ID}",
+                "short": true},
+             { "title": "Host Name",
+               "value": "${HOST_NAME}",
+                "short": true}
+           ]
+      },
+      { "title": "Would you like to ACK this alarm ?",
+        "fallback": "Action for ACK alarm",
+        "callback_id": "zabbix ${EVENT_ID}",
+        "color": "#3AA3E3",
+        "actions": [
+        {
+           "name": "action",
+           "text": "ACK without Closing",
+           "type": "button",
+           "value": "ACK_zabbix"
+         },
+        { 
+           "name": "action",
+           "text": "ACK with Closing",
+           "type": "button",
+           "style": "danger",
+           "value": "ACK_CLOSE_zabbix",
+           "confirm": {
+              "title": "Are you sure?",
+              "text": "Would you like to ACK and CLOSE this problem?",
+              "ok_text": "Yes", 
+              "dismiss_text": "No"
+           }
+         }
+        ]
+      }
+    ]
+    }
+JSONS)
 }
 [ ${UID} -ne 0 ] && Usage
 while getopts ':e:n:s:t:p:u:U:T:' ARGS
@@ -85,3 +90,4 @@ while getopts ':e:n:s:t:p:u:U:T:' ARGS
 done
 Parser
 JSON
+echo "curl -XPOST -H'Content-type: application/json'  -d '${JSON_V}' ${URL}"
