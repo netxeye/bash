@@ -10,6 +10,7 @@ function Usage {
         -u The URL of slack API
         -U The URL of ZABBIX Tigger
         -T The Token of slack API
+        -c The Channel you want to send
 USAGE
 exit 1
 }
@@ -21,14 +22,10 @@ function Parser {
     fi
 }
 function JSON {
-    JSON_V=$(cat <<-JSONS
-    {
-    "text": "This is Zabbix alarm from ZABBIX3",
-    "channel": "#zabbix-discussion",
-    "as_user": "true",
-    "token": "${TOKEN}",
-    "attachments": [
+    JSON_V=`cat <<-JSONS
+    [
       { "title": "Problem ${TRIGGER_NAME}",
+        "callback_id" : "${EVENT_ID}",
         "title_link": "${TRIGGER_URL}",
          "color": "danger",
          "fields": [
@@ -70,11 +67,10 @@ function JSON {
         ]
       }
     ]
-    }
-JSONS)
+JSONS`
 }
 [ ${UID} -ne 0 ] && Usage
-while getopts ':e:n:s:t:p:u:U:T:' ARGS
+while getopts ':e:n:s:t:p:u:U:T:c:' ARGS
     do
         case ${ARGS} in
             e) EVENT_ID=${OPTARG} ;;
@@ -85,9 +81,10 @@ while getopts ':e:n:s:t:p:u:U:T:' ARGS
             u) URL=${OPTARG} ;;
             U) TRIGGER_URL=${OPTARG} ;;
             T) TOKEN=${OPTARG} ;;
+            c) CHANNEL=${OPTARG} ;;
             *) Usage ;;
         esac
 done
 Parser
 JSON
-echo "curl -XPOST -H'Content-type: application/json'  -d '${JSON_V}' ${URL}"
+curl -XPOST  -d "token=${TOKEN}" -d "text=Problme happen ${HOST_NAME}" -d"channel=${CHANNEL:-zabbix-discussion}"  -d "attachments=${JSON_V}" ${URL}
