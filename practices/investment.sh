@@ -7,6 +7,11 @@ ETFs=( ['Consumer']='XLP VDC' ['Utilities']='XLU VPU FXU' ['HealthCare']='VHT XL
 ['China']='MCHI ASHR FXI KWEB' ['SP500']='SPHD IVV SPY' )
 PATHs='/home/tao.lu/git/ETFs'
 GIT_PATH=${PATHs}
+INVEST=2657
+TOTAL=0
+declare -A INVEST_PERCETAGE
+INVEST_PERCETAGE=(['XLP']=0.35 ['XLU']=0.2 ['MCHI']=0.08 ['ASHR']=0.07 ['XLV']=0.1
+['SPHD']=0.05 ['IVV']=0.15)
 
 function fetch_data () {
         echo "## ${2}" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
@@ -62,6 +67,24 @@ function clean_Up () {
 				rm -rf ${1}/*
 }
 
+function calculate_Price () {
+				if [ -n "${INVEST_PERCETAGE[${2}]}" ]
+				then
+                echo "### COST" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+                echo "" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				        echo  "|Data|Result|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				        echo  "|:----:|:---:|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				        price=$(awk -F '|' '/Net Asset Value/{print $3}' ${1}/${2}.md | tr -d '$')
+								stocks=$(echo ${INVEST}*${INVEST_PERCETAGE[${2}]}/${price} | bc)
+								amount=$(echo ${stocks}*${price} | bc)
+								printf '|Amount|%d|\n' ${stocks} | tee -a ${1}/${2}.md | tee \
+												-a ${PATHs}/ETFs.md
+								printf '|Cost|$%.2f|\n' ${amount} | tee -a ${1}/${2}.md | tee \
+												-a ${PATHs}/ETFs.md
+								TOTAL=$(echo ${TOTAL}+${amount} | bc)
+				fi
+}
+
 
 clean_Up ${PATHs}
 echo "Mike's Investment" | tee -a ${PATHs}/ETFs.md
@@ -74,7 +97,7 @@ for type_etf in "${!ETFs[@]}"
 do
 				echo "* [${type_etf}](#${type_etf})" | tee -a ${PATHs}/ETFs.md
 done
-
+echo "* [Cost](#Cost)" | tee -a ${PATHs}/ETFs.md
 for type_etf in "${!ETFs[@]}"
 do
 				if [ ! -d ${PATHs}/${type_etf} ]; then
@@ -88,8 +111,14 @@ do
                 fetch_data ${PATHs}/${type_etf} $ETF
                 create_Rating ${PATHs}/${type_etf} $ETF
                 create_Data ${PATHs}/${type_etf} $ETF
+                calculate_Price ${PATHs}/${type_etf} ${ETF}
 				done
 				echo "" | tee -a ${PATHs}/ETFs.md
 done
-
+echo "## Cost" | tee -a ${PATHs}/ETFs.md
+echo "" | tee -a ${PATHs}/ETFs.md
+echo  "|Name|Value|" | tee -a ${PATHs}/ETFs.md
+echo  "|:----:|:---:|" | tee -a ${PATHs}/ETFs.md
+printf '|Total|$%.2f|\n' ${TOTAL}| tee -a ${PATHs}/ETFs.md
+printf '|Diff|$%.2f|\n' $(echo ${INVEST}-${TOTAL} | bc)| tee -a ${PATHs}/ETFs.md
 git_Update ${GIT_PATH}
