@@ -53,9 +53,9 @@ function create_Data () {
 }
 
 function git_Update () {
-				git --work-tree=${1} add .
-				git --work-tree=${1} commit -a -m "`date +%F` update"
-				git --work-tree=${1} push
+				git --git-dir=${1}/.git --work-tree=${1} add ${1}/
+				git --git-dir=${1}/.git --work-tree=${1} commit -a -m "`date +%F` update"
+				git --git-dir=${1}/.git --work-tree=${1} push
 }
 
 function clean_Up () {
