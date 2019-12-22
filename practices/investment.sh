@@ -4,14 +4,14 @@ KEYWORDS_RATING=('MSCI ESG Rating' 'MSCI ESG Quality Score' 'Global Percentile R
 KEYWORDS_DATA=('Expense Ratio' 'Price / Earnings Ratio' 'Distribution Yield' 'Net Asset Value')
 declare -A ETFs
 ETFs=( ['Consumer']='XLP VDC' ['Utilities']='XLU VPU FXU' ['HealthCare']='VHT XLV'
-['China']='MCHI ASHR FXI KWEB' ['SP500']='SPHD IVV SPY' )
+['China']='MCHI ASHR FXI KWEB' ['SP500']='SPHD IVV SPY' ['Bond']='IEF TLT')
 PATHs='/home/tao.lu/git/ETFs'
 GIT_PATH=${PATHs}
 INVEST=2657
 TOTAL=0
 declare -A INVEST_PERCETAGE
-INVEST_PERCETAGE=(['XLP']=0.35 ['XLU']=0.2 ['MCHI']=0.08 ['ASHR']=0.07 ['XLV']=0.1
-['SPHD']=0.05 ['IVV']=0.15)
+INVEST_PERCETAGE=(['XLP']=0.25 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.1
+['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.17 ['TLT']=0.15)
 
 function fetch_data () {
         echo "## ${2}" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
@@ -97,7 +97,7 @@ for type_etf in "${!ETFs[@]}"
 do
 				echo "* [${type_etf}](#${type_etf})" | tee -a ${PATHs}/ETFs.md
 done
-echo "* [Cost](#Cost)" | tee -a ${PATHs}/ETFs.md
+echo "* [Sumary](#Sumary)" | tee -a ${PATHs}/ETFs.md
 for type_etf in "${!ETFs[@]}"
 do
 				if [ ! -d ${PATHs}/${type_etf} ]; then
@@ -115,7 +115,7 @@ do
 				done
 				echo "" | tee -a ${PATHs}/ETFs.md
 done
-echo "## Cost" | tee -a ${PATHs}/ETFs.md
+echo "## Sumary" | tee -a ${PATHs}/ETFs.md
 echo "" | tee -a ${PATHs}/ETFs.md
 echo  "|Name|Value|" | tee -a ${PATHs}/ETFs.md
 echo  "|:----:|:---:|" | tee -a ${PATHs}/ETFs.md
