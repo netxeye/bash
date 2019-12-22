@@ -10,8 +10,8 @@ GIT_PATH=${PATHs}
 INVEST=2657
 TOTAL=0
 declare -A INVEST_PERCETAGE
-INVEST_PERCETAGE=(['XLP']=0.25 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.1
-['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.17 ['TLT']=0.15)
+INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.2
+['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.25)
 
 function fetch_data () {
         echo "## ${2}" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
@@ -95,7 +95,7 @@ function calulate_Percentage () {
 							total=0
 							for cost in `awk -F '|' '/Cost/{print $3}'  ${PATHs}/${etf}/*.md | tr -d '$'`
 							do
-											total=$(echo ${total}+${cost} | bc)
+											total=$(echo "scale=2;${total}+${cost}" | bc)
 							done
 							percentage=$(echo "scale=2;${total}/${TOTAL}*100" | bc)
 			        printf '|%s|%.2f%%|$%.2f|\n' ${etf} ${percentage} ${total}|  tee -a ${PATHs}/ETFs.md
