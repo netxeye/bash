@@ -98,7 +98,7 @@ function calulate_Percentage () {
 											total=$(echo ${total}+${cost} | bc)
 							done
 							percentage=$(echo "scale=2;${total}/${TOTAL}*100" | bc)
-			        printf '|%s|%d%%|$%d|\n' ${etf} ${percentage} ${total}|  tee -a ${PATHs}/ETFs.md
+			        printf '|%s|%.2f%%|$%.2f|\n' ${etf} ${percentage} ${total}|  tee -a ${PATHs}/ETFs.md
 			done
 }
 
