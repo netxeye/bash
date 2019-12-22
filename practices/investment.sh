@@ -40,6 +40,12 @@ function create_Rating () {
 								        -a ${PATHs}/ETFs.md
 				done
         echo "" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+        echo "### 翻译 " | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+        echo "|英文|中文|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|:----:|:---:|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|MSCIESG ESG Rating|摩根斯坦利ESG评级|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|MSCI ESG Quality Score|摩根斯坦利ESG质量得分 (10分制)|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|Global Percentile Rank|全球百分等级(100分制)|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
 }
 
 function create_Data () {
@@ -55,6 +61,13 @@ function create_Data () {
 												-a ${PATHs}/ETFs.md
 				done
         echo "" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+        echo "### 翻译 " | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+        echo "|英文|中文|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|:----:|:---:|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|Expense Ratio|管理费 百分比 |" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|Price / Earnings Ratio|市盈率|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|Distribution Yield|年收益率 分红 |" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				echo  "|Net Asset Value|资产净值|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
 }
 
 function git_Update () {
@@ -82,6 +95,11 @@ function calculate_Price () {
 								printf '|Cost|$%.2f|\n' ${amount} | tee -a ${1}/${2}.md | tee \
 												-a ${PATHs}/ETFs.md
 								TOTAL=$(echo ${TOTAL}+${amount} | bc)
+                echo "### 翻译 " | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+                echo "|英文|中文|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				        echo  "|:----:|:---:|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				        echo  "|Amount|计划 购买 ETF数量 |" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
+				        echo  "|Cost|总共开销|" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
 				fi
 }
 
@@ -99,13 +117,29 @@ function calulate_Percentage () {
 							done
 							percentage=$(echo "scale=2;${total}/${TOTAL}*100" | bc)
 			        printf '|%s|%d%%|$%d|\n' ${etf} ${percentage} ${total}|  tee -a ${PATHs}/ETFs.md
+              echo "### 翻译 " | tee -a ${PATHs}/ETFs.md
+              echo "|英文|中文|" | tee -a ${PATHs}/ETFs.md
+				      echo  "|:----:|:---:|" | tee -a ${PATHs}/ETFs.md
+				      echo  "|ETF|基金 名称 |" | tee -a ${PATHs}/ETFs.md
+				      echo  "|Percentage|占比 投资 比例 |" | tee -a ${PATHs}/ETFs.md
+				      echo  "|Total Cost|总共每月花费 |" | tee -a ${PATHs}/ETFs.md
 			done
 }
 
 clean_Up ${PATHs}
-echo "Mike's Investment" | tee -a ${PATHs}/ETFs.md
+echo "Mike's Investment 投资" | tee -a ${PATHs}/ETFs.md
 echo "----" | tee -a ${PATHs}/ETFs.md
 echo "" | tee -a ${PATHs}/ETFs.md
+echo "***" | tee -a ${PATHs}/ETFs.md
+echo "### 翻译ETF " | tee -a ${PATHs}/ETFs.md
+echo "|英文|中文|" | tee -a ${PATHs}/ETFs.md
+echo  "|:----:|:---:|" | tee -a ${PATHs}/ETFs.md
+echo  "|Consumer|日用品 消费 类 |" | tee -a ${PATHs}/ETFs.md
+echo  "|China|中国大型 国企 股票|" | tee -a ${PATHs}/ETFs.md
+echo  "|HealthCare|美国公共医疗 |" | tee -a ${PATHs}/ETFs.md
+echo  "|SP500|标普 500指数 |" | tee -a ${PATHs}/ETFs.md
+echo  "|Utilities|基础 设施 |" | tee -a ${PATHs}/ETFs.md
+echo  "|Bond|美国 国债 |" | tee -a ${PATHs}/ETFs.md
 echo "***" | tee -a ${PATHs}/ETFs.md
 echo "## Contents" | tee -a ${PATHs}/ETFs.md
 
