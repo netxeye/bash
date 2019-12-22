@@ -85,6 +85,22 @@ function calculate_Price () {
 				fi
 }
 
+function calulate_Percentage () {
+      echo "## Percentage" | tee -a ${PATHs}/ETFs.md
+      echo "" | tee -a ${PATHs}/ETFs.md
+      echo  "|ETF|Percentage|Total Cost|" | tee -a ${PATHs}/ETFs.md
+      echo  "|:---:|:---:|:---:|" | tee -a ${PATHs}/ETFs.md
+      for etf in "${!ETFs[@]}"
+			do
+							total=0
+							for cost in `awk -F '|' '/Cost/{print $3}'  ${PATHs}/${etf}/*.md | tr -d '$'`
+							do
+											total=$(echo ${total}+${cost} | bc)
+							done
+							percentage=$(echo "scale=2;${total}/${TOTAL}*100" | bc)
+			        printf '|%s|%d%%|$%d|\n' ${etf} ${percentage} ${total}|  tee -a ${PATHs}/ETFs.md
+			done
+}
 
 clean_Up ${PATHs}
 echo "Mike's Investment" | tee -a ${PATHs}/ETFs.md
@@ -121,4 +137,5 @@ echo  "|Name|Value|" | tee -a ${PATHs}/ETFs.md
 echo  "|:----:|:---:|" | tee -a ${PATHs}/ETFs.md
 printf '|Total|$%.2f|\n' ${TOTAL}| tee -a ${PATHs}/ETFs.md
 printf '|Diff|$%.2f|\n' $(echo ${INVEST}-${TOTAL} | bc)| tee -a ${PATHs}/ETFs.md
+calulate_Percentage
 git_Update ${GIT_PATH}
