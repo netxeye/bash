@@ -4,14 +4,16 @@ KEYWORDS_RATING=('MSCI ESG Rating' 'MSCI ESG Quality Score' 'Global Percentile R
 KEYWORDS_DATA=('Expense Ratio' 'Price / Earnings Ratio' 'Distribution Yield' 'Net Asset Value')
 declare -A ETFs
 ETFs=( ['Consumer']='XLP VDC' ['Utilities']='XLU VPU FXU' ['HealthCare']='VHT XLV'
-['China']='MCHI ASHR FXI KWEB' ['SP500']='SPHD IVV SPY' ['Bond']='IEF TLT'
+['China']='MCHI ASHR FXI KWEB AIA' ['SP500']='SPHD IVV SPY' ['Bond']='IEF TLT'
 ['Gold']='GLD IAU DGL' )
 PATHs='/home/tao.lu/git/ETFs'
 GIT_PATH=${PATHs}
 INVEST=2657
 TOTAL=0
 declare -A INVEST_PERCETAGE
-INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.25
+#INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.25
+#['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.15 ['IAU']=0.05)
+INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['AIA']=0.1 ['XLV']=0.25
 ['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.15 ['IAU']=0.05)
 
 function fetch_data () {
