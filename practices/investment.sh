@@ -4,7 +4,7 @@ KEYWORDS_RATING=('MSCI ESG Rating' 'MSCI ESG Quality Score' 'Global Percentile R
 KEYWORDS_DATA=('Expense Ratio' 'Price / Earnings Ratio' 'Distribution Yield' 'Net Asset Value')
 declare -A ETFs
 ETFs=( ['Consumer']='XLP VDC' ['Utilities']='XLU VPU FXU' ['HealthCare']='VHT XLV'
-['China']='MCHI ASHR FXI KWEB AIA' ['SP500']='SPHD IVV SPY' ['Bond']='IEF TLT'
+['China']='MCHI ASHR FXI KWEB AIA FLXC' ['SP500']='SPHD IVV SPY' ['Bond']='IEF TLT'
 ['Gold']='GLD IAU DGL' )
 PATHs='/home/tao.lu/git/ETFs'
 GIT_PATH=${PATHs}
