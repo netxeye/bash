@@ -11,10 +11,12 @@ GIT_PATH=${PATHs}
 INVEST=2657
 TOTAL=0
 declare -A INVEST_PERCETAGE
-#INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.25
-#['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.15 ['IAU']=0.05)
+# INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.25
+# ['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.15 ['IAU']=0.05)
+# INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['AIA']=0.1 ['XLV']=0.25
+# ['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.15 ['IAU']=0.05)
 INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['AIA']=0.1 ['XLV']=0.25
-['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.15 ['IAU']=0.05)
+['SPY']=0.17 ['IVV']=0.2  ['IAU']=0.05)
 
 function fetch_data () {
         echo "## ${2}" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
