@@ -8,7 +8,8 @@ ETFs=( ['Consumer']='XLP VDC' ['Utilities']='XLU VPU FXU' ['HealthCare']='VHT XL
 ['Gold']='GLD IAU DGL' )
 PATHs='/home/tao.lu/git/ETFs'
 GIT_PATH=${PATHs}
-INVEST=2657
+#INVEST=2657
+INVEST=3000
 TOTAL=0
 declare -A INVEST_PERCETAGE
 # INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['MCHI']=0.06 ['ASHR']=0.04 ['XLV']=0.25
@@ -16,8 +17,8 @@ declare -A INVEST_PERCETAGE
 # INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.2 ['AIA']=0.1 ['XLV']=0.25
 # ['SPHD']=0.02 ['IVV']=0.13 ['IEF']=0.07 ['TLT']=0.15 ['IAU']=0.05)
 # 30% China; 35% US; 5% Gold; 30% Consumer+Utilities+HealthCare
-INVEST_PERCETAGE=(['XLP']=0.13 ['XLU']=0.12 ['XLV']=0.05 ['AIA']=0.1 ['MCHI']=0.1 ['ASHR']=0.1
-['SPY']=0.2 ['IVV']=0.15 ['IAU']=0.05)
+INVEST_PERCETAGE=(['XLP']=0.15 ['XLU']=0.15 ['XLV']=0.1 ['AIA']=0.1 ['MCHI']=0.1 ['ASHR']=0.1
+['SPY']=0.1 ['IVV']=0.1 ['IAU']=0.05)
 
 function fetch_data () {
         echo "## ${2}" | tee -a ${1}/${2}.md | tee -a ${PATHs}/ETFs.md
